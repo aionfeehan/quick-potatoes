@@ -33,4 +33,7 @@
 
 # Extras
 *.json
-CMakeLists.txt
+CMake*
+cmake*
+make*
+quick-potatoes

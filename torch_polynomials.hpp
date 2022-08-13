@@ -11,29 +11,50 @@
 #include <stdio.h>
 #include <torch/script.h>
 
-
+/**
+ * 
+ * @brief libtorch - compatible representation of \f$ f(x) = \sum_{k=0}^n a_kX^k \f$
+ * 
+ * Representation of \f$ f(x) = \sum_{k=0}^n a_kX^k \f$ as a tensor of coefficients \f$ a_k \f$ We support standard operations between polynomials
+ * via their algebraic definition, and funciton application to double input \f$ x \f$
+ */
 class TorchPolynomial{
-
-    torch::Tensor coefficient_tensor;
-    bool requires_grad;
 
     public:
 
         TorchPolynomial(torch::Tensor in_coefficients, bool in_requires_grad=true);
         TorchPolynomial(double in_coefficient, bool in_requires_grad=true);
 
-        TorchPolynomial operator+(const TorchPolynomial& other);
-        TorchPolynomial operator-(const TorchPolynomial& other);
-        TorchPolynomial operator*(const TorchPolynomial& other);
+        TorchPolynomial operator+(const TorchPolynomial& other) const;
+        TorchPolynomial operator+(const double other) const;
+        TorchPolynomial operator-(const TorchPolynomial& other) const;
+        TorchPolynomial operator-(const double other) const;
+        TorchPolynomial operator*(const TorchPolynomial& other) const;
+        TorchPolynomial operator*(const double other) const;
 
-        bool operator==(TorchPolynomial& other);
-        auto operator[](int index);
+        torch::Tensor operator()(const torch::Tensor t) const;
+        torch::Tensor operator()(const double t) const;
 
-        torch::Tensor coefficients();
+        bool operator==(const TorchPolynomial& other) const;
+        bool operator!=(const TorchPolynomial& other) const;
+
+        torch::Tensor operator[](int index) const;
+
+        torch::Tensor coefficients() const;
         size_t degree() const;
 
-        TorchPolynomial derivative();
-        TorchPolynomial antiderivative();
+        /**
+         *  Some nice documentation here
+         * 
+         *  
+         */
+        TorchPolynomial derivative() const;
+        TorchPolynomial antiderivative() const;
+        TorchPolynomial clone() const;
+
+    private:
+        torch::Tensor coefficient_tensor;
+        bool requires_grad;
 };
 
 #endif /* torch_polynomials_hpp */
