@@ -3,9 +3,8 @@
 ## Quick potatoes is a library of scripts designed to support native automatic differentiation of term structure models via a libtorch backend
 
 
-#### Hello Noah
+#### Currently a work in progress
 
+This is a C++ implementation of the closely related callable-potatoes repository, where I built a proof of concept of the model in Python. Language constraints being what they are, and most of the libtorch API being accessible in C++ anyway, I figured it was better to continue the work in C++.
 
-Git is used for controlling different versions of the same project. It doesn't care how you organize your files, it just makes sure everybody has the same copies of everything. So if you want to share code with people and be sure they always have the most up-to-date version, you can use Git!
-
-Or if you want multiple people to work on the same project and see each other's updates, use git. Or if you want to control what modifications make it in to the project and what doesn't use Git! Check out how pull requests work.
+Current status: TorchPolynomial base class (use for term structures) passes simple unit tests, working on building out the next layer of the term structure, the SegmentFunction. Code is written, currently in testing phase.
