@@ -47,7 +47,7 @@ SegmentFunction SegmentFunction::operator+(const SegmentFunction& other) const {
     new_polynomials.insert(new_polynomials.end(), other.polynomials.begin(), other.polynomials.end());
     SegmentFunction new_segment_function = SegmentFunction(
         in_exp_coefs,
-        polynomials
+        new_polynomials
     );
     return new_segment_function;
 }
