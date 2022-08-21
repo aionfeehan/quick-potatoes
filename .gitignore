@@ -37,3 +37,5 @@ CMake*
 cmake*
 make*
 quick-potatoes
+
+docs/**
