@@ -17,8 +17,8 @@ int torch_polynomials_tests::test_degree(){
     torch::Tensor my_tensor = torch::ones(degree + 1);
     TorchPolynomial my_polynomial = TorchPolynomial(my_tensor);
     bool is_correct = (my_polynomial.degree() == degree);
-    std::string output_message = is_correct ? "Degree passed: " : "Degree FAILED: ";
-    std::cout << output_message << "Degree = " << my_polynomial.degree() << std::endl;
+    std::string output_message = is_correct ? "Degree passed " : "Degree FAILED: ";
+    std::cout << output_message << "Degree = " << my_polynomial.degree() << "\n";
     int num_errors = (int) not is_correct;
     return num_errors;
 }
@@ -35,7 +35,7 @@ int torch_polynomials_tests::test_addition(){
     TorchPolynomial target_polynomial = TorchPolynomial(target_tensor);
     bool is_correct = (target_polynomial == result_polynomial);
     std::string output_message = is_correct ? "Addition passed" : "Addition FALIED";
-    std::cout << output_message << std::endl;
+    std::cout << output_message << "\n";
     int num_errors = (int) not is_correct;
     return num_errors;
 }
@@ -51,13 +51,13 @@ int torch_polynomials_tests::test_multiplication(){
     TorchPolynomial target_polynomial = TorchPolynomial(torch::tensor(f_target));
     bool is_correct = (target_polynomial == result_polynomial);
     std::string output_message = is_correct ? "Multiplication passed" : "Multiplication FALIED";
-    std::cout << output_message << std::endl;
+    std::cout << output_message << "\n";
     int num_errors = (int) not is_correct;
 
     torch::Tensor result_tensor = result_polynomial.coefficients();
     torch::sum(result_tensor).backward();
     torch::Tensor a_grad = a_tensor.grad();
 
-    std::cout << "Multiplication grad: " << a_grad[0] << std::endl;
+    std::cout << "Multiplication grad: " << a_grad[0] << "\n";
     return num_errors;
 }

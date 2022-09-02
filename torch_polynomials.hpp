@@ -55,6 +55,7 @@ class TorchPolynomial{
     private:
         torch::Tensor coefficient_tensor;
         bool requires_grad;
+        static torch::Tensor clean_trailing_zeros(torch::Tensor in_tensor);
 };
 
 #endif /* torch_polynomials_hpp */

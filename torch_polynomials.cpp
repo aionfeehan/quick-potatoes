@@ -10,15 +10,30 @@
 #include "torch_polynomials.hpp"
 
 TorchPolynomial::TorchPolynomial(torch::Tensor in_coefficients, bool in_requires_grad){
-    coefficient_tensor = in_coefficients;
+    coefficient_tensor = clean_trailing_zeros(in_coefficients);
     requires_grad = in_requires_grad;
     coefficient_tensor.set_requires_grad(requires_grad);
 }
 
 TorchPolynomial::TorchPolynomial(double in_coefficient, bool in_requires_grad): 
-    coefficient_tensor(in_coefficient * torch::ones(1)), 
+    coefficient_tensor(clean_trailing_zeros(in_coefficient * torch::ones(1))), 
     requires_grad(in_requires_grad){
         coefficient_tensor.set_requires_grad(requires_grad);
+}
+
+static torch::Tensor clean_trailing_zeros(torch::Tensor in_tensor){
+    int n_zeros = 0;
+    int tensor_size = in_tensor.size(0);
+    for (int i = tensor_size; i > 0; --i){
+        if (in_tensor[i].item<double>() == 0){
+            n_zeros++;
+        }
+        else {
+            break;
+        }
+    }
+    torch::Tensor out_tensor = in_tensor.index({torch::arange(0, tensor_size - n_zeros)});
+    return out_tensor;
 }
 
 
@@ -119,7 +134,7 @@ TorchPolynomial TorchPolynomial::derivative() const {
 }
 
 TorchPolynomial TorchPolynomial::antiderivative() const {
-    std::vector<torch::Tensor> new_coefficients;
+    std::vector<torch::Tensor> new_coefficients({torch::zeros(1)});
     for (int k = 0; k < degree(); ++k){
         new_coefficients.push_back(coefficient_tensor[k] / (float) k + 1);
     }

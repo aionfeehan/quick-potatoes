@@ -25,7 +25,7 @@ SegmentFunction segment_function_tests::build_test_segment_function(){
 int segment_function_tests::test_degree(){
     SegmentFunction test_segf = build_test_segment_function();
     bool is_correct = (test_segf.degree() == 2);
-    std::string output_message = is_correct ? "Degree passed: " : "Degree FAILED";
+    std::string output_message = is_correct ? "Degree passed " : "Degree FAILED";
     std::cout << output_message << std::endl;
     if (not is_correct) {
         std::cout << "Degree expected: " << "2     " << "Degree received: " << test_segf.degree() << std::endl; 
@@ -46,7 +46,7 @@ int segment_function_tests::test_addition(){
     SegmentFunction test_segf = test_segf1 + test_segf2;
 
     bool is_correct = (target_segf == test_segf);
-    std::string output_message = is_correct ? "Addition passed: " : "Addition FAILED";
+    std::string output_message = is_correct ? "Addition passed " : "Addition FAILED";
     std::cout << output_message << std::endl;
     if (not is_correct){
         std::cout << "Results:" << std::endl;
@@ -72,7 +72,7 @@ int segment_function_tests::test_subtraction(){
     SegmentFunction test_segf = test_segf1 - test_segf2;
 
     bool is_correct = (target_segf == test_segf);
-    std::string output_message = is_correct ? "Subtraction passed: " : "Subtraction FAILED";
+    std::string output_message = is_correct ? "Subtraction passed " : "Subtraction FAILED";
     std::cout << output_message << std::endl;
 
     if (not is_correct) {
@@ -88,15 +88,15 @@ int segment_function_tests::test_subtraction(){
 int segment_function_tests::test_derivative(){
     std::vector<TorchPolynomial> test_polynomial_1({TorchPolynomial(torch::ones(3))});
     SegmentFunction test_segf_1 = SegmentFunction(test_polynomial_1);
-    torch::Tensor target_coefs_1 = torch::zeros(3);
-    target_coefs_1[0] += 2;
-    target_coefs_1[1] += 1;
+    torch::Tensor target_coefs_1 = torch::zeros(2);
+    target_coefs_1[0] += 1;
+    target_coefs_1[1] += 2;
     std::vector<TorchPolynomial> in_polynomials_1({target_coefs_1});
     SegmentFunction target_segf_1(in_polynomials_1);
 
     SegmentFunction test_derivative_1 = test_segf_1.derivative();
     bool test_1_is_correct = (target_segf_1 == test_derivative_1);
-    std::string output_message = test_1_is_correct ? "First derivative test passed: " : "First derivative test FAILED";
+    std::string output_message = test_1_is_correct ? "First derivative test passed " : "First derivative test FAILED";
     std::cout << output_message << std::endl;
 
     if (not test_1_is_correct){
@@ -117,7 +117,7 @@ int segment_function_tests::test_derivative(){
     SegmentFunction test_derivative_2 = test_segf_2.derivative();
     bool test_2_is_correct = (target_segf_2 == test_derivative_2);
 
-    output_message = test_2_is_correct ? "Second derivative test passed: " : "Second derivative test FAILED";
+    output_message = test_2_is_correct ? "Second derivative test passed " : "Second derivative test FAILED";
     std::cout << output_message << std::endl;
 
     if (not test_2_is_correct){
